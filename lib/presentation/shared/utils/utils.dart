@@ -106,7 +106,8 @@ class SomethingWentWrong extends StatelessWidget {
             height: 40,
           ),
           Text(
-            'Something went wrong!',
+            'No city found\nTry searching again',
+            textAlign: TextAlign.center,
             style: titleTextStyle(fontSize: 16),
           ),
         ],

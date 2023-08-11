@@ -35,21 +35,24 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
               },
               child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
                 builder: (context, state) {
-                  if (state is CityWeatherInitial ||
-                      _searchController.text.isEmpty) {
-                    return cityWeatherInitial(size, context);
-                  }
-                  if (state is CityWeatherLoading) {
-                    return const LoadingIndicator();
-                  }
-                  if (state is CityWeatherSuccess) {
-                    return cityWeatherSuccess(state, size, context);
-                  }
-                  if (state is CityWeatherFailed) {
-                    return _cityWeatherError(size, context);
+                  Widget widget;
+                  var shouldShowInitialState = state is CityWeatherInitial ||
+                      _searchController.text.isEmpty;
+                  if (shouldShowInitialState) {
+                    widget = cityWeatherInitial(size, context);
+                  } else if (state is CityWeatherLoading) {
+                    widget = const LoadingIndicator();
+                  } else if (state is CityWeatherSuccess) {
+                    widget = cityWeatherSuccess(state, size, context);
+                  } else if (state is CityWeatherFailed) {
+                    widget = _cityWeatherError(size, context);
                   } else {
-                    return const SizedBox();
+                    widget = const SizedBox();
                   }
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 350),
+                    child: widget,
+                  );
                 },
               ),
             ),
@@ -65,7 +68,11 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
       alignment: Alignment.center,
       child: Column(
         children: [
-          _searchBar(size, context),
+          _searchBar(
+            size: size,
+            context: context,
+            clearButtonShown: false,
+          ),
           const Space(height: 8),
           const Expanded(
             child: CityListView(),
@@ -75,7 +82,11 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
     );
   }
 
-  Widget _searchBar(Size size, BuildContext context) {
+  Widget _searchBar({
+    required Size size,
+    required BuildContext context,
+    required clearButtonShown,
+  }) {
     return Container(
       margin: const EdgeInsets.only(top: 40, left: 16, right: 16),
       decoration: BoxDecoration(
@@ -109,12 +120,17 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
           IconButton(
             key: const ValueKey('search'),
             onPressed: () {
-              BlocProvider.of<CityWeatherBloc>(context)
-                  .add(SearchCityWeather(_searchController.text));
+              final bloc = BlocProvider.of<CityWeatherBloc>(context);
+              if (clearButtonShown) {
+                _searchController.clear();
+                bloc.add(const ClearSearchInput());
+              } else {
+                bloc.add(SearchCityWeather(_searchController.text));
+              }
             },
             icon: Icon(
-              Icons.search,
-              size: 28,
+              clearButtonShown ? Icons.clear : Icons.search,
+              size: 22,
               color: AppColors.iconColor,
             ),
           ),
@@ -185,40 +201,50 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 2.7, crossAxisCount: 2),
+                      childAspectRatio: 2.7,
+                      crossAxisCount: 2,
+                    ),
                     children: [
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Humidity",
-                          value: '${state.weather.humidity}%'),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Humidity",
+                        value: '${state.weather.humidity}%',
+                      ),
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Wind Speed",
-                          value: '${state.weather.wind} m/s'),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Wind Speed",
+                        value: '${state.weather.wind} m/s',
+                      ),
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Pressure",
-                          value: '${state.weather.pressure} hPa'),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Pressure",
+                        value: '${state.weather.pressure} hPa',
+                      ),
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Visibility",
-                          value: '${state.weather.visibility / 1000} km'),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Visibility",
+                        value: '${state.weather.visibility / 1000} km',
+                      ),
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Cloudiness",
-                          value: '${state.weather.clouds}%'),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Cloudiness",
+                        value: '${state.weather.clouds}%',
+                      ),
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Feels Like",
-                          value: '${state.weather.feelsLike}'),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Feels Like",
+                        value: '${state.weather.feelsLike}',
+                      ),
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Sunrise",
-                          value: getTimeInHHMM(state.weather.sunrise)),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Sunrise",
+                        value: getTimeInHHMM(state.weather.sunrise),
+                      ),
                       HeadingDetailWidget(
-                          cimage: 'assets/images/cold_mode.jpg',
-                          title: "Sunset",
-                          value: getTimeInHHMM(state.weather.sunset)),
+                        cimage: 'assets/images/cold_mode.jpg',
+                        title: "Sunset",
+                        value: getTimeInHHMM(state.weather.sunset),
+                      ),
                     ],
                   ),
                 )
@@ -226,7 +252,11 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
             ),
           ),
         ),
-        _searchBar(size, context),
+        _searchBar(
+          size: size,
+          context: context,
+          clearButtonShown: true,
+        ),
       ],
     );
   }
@@ -235,7 +265,11 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
     return Stack(
       children: [
         const SomethingWentWrong(),
-        _searchBar(size, context),
+        _searchBar(
+          size: size,
+          context: context,
+          clearButtonShown: true,
+        ),
       ],
     );
   }

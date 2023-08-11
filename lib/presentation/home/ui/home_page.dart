@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
               widget = const SizedBox();
             }
             return AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 350),
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return FadeTransition(
                   opacity: animation,

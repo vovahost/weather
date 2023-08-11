@@ -43,6 +43,8 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
       } catch (error) {
         emit(const CityWeatherFailed("Not Found"));
       }
+    } else if (event is ClearSearchInput) {
+      emit(CityWeatherInitial());
     }
   }
 

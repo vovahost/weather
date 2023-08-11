@@ -12,3 +12,10 @@ class SearchCityWeather extends CityWeatherEvent {
   @override
   List<Object?> get props => [city];
 }
+
+class ClearSearchInput extends CityWeatherEvent {
+  const ClearSearchInput();
+
+  @override
+  List<Object?> get props => [];
+}
