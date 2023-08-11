@@ -14,4 +14,19 @@ class OpenWeatherRepository implements WeatherRepository {
       unit: unit,
     );
   }
+
+  @override
+  Future<dynamic> getCityForecast({
+    required double lat,
+    required double long,
+    required String unit,
+    required String exclude,
+  }) async {
+    return await _openWeatherService.getCityWeatherForecast(
+      lat: lat,
+      long: long,
+      unit: unit,
+      exclude: exclude,
+    );
+  }
 }

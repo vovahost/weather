@@ -23,6 +23,17 @@ class CityWeatherSuccess extends CityWeatherState {
   List<Object> get props => [weather];
 }
 
+extension WeatherExtension on CityWeather {
+  String get currentWeatherBgImage {
+    final weatherIcon = weather.first.icon;
+    if(weatherIcon.endsWith('n')){
+      return 'assets/images/night_mode.gif';
+    } else {
+      return 'assets/images/sun_mode.gif';
+    }
+  }
+}
+
 class CityWeatherFailed extends CityWeatherState {
   final String error;
 

@@ -17,8 +17,6 @@ class CityWeatherPage extends StatefulWidget {
 class _CityWeatherPageState extends State<CityWeatherPage> {
   final _searchController = TextEditingController();
 
-  String currentBgImage = 'assets/images/sun_mode.gif';
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -68,7 +66,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                           .add(SearchCityWeather(value));
                                     },
                                     decoration: InputDecoration(
-                                      hintText: 'Search City',
+                                      hintText: 'Type a City',
                                       hintStyle:
                                           subTitleTextStyle(fontSize: 18),
                                       border: InputBorder.none,
@@ -103,7 +101,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                   'assets/3d/02d.png',
                                   height: size.height * 0.2,
                                 ),
-                                spacer(),
+                                const Space(height: 16),
                                 Text(
                                   'Search the weather \nof the city you want !',
                                   textAlign: TextAlign.center,
@@ -121,43 +119,11 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                   if (state is CityWeatherLoading) {
                     return const Loading();
                   }
-
                   if (state is CityWeatherSuccess) {
-                    if (state.weather.weather.first.icon == '50d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '01d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '02d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '03d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '04d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '09d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '10d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '11d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    } else if (state.weather.weather.first.icon == '13d') {
-                      currentBgImage = 'assets/images/sun_mode.gif';
-                    }
-                    //for night
-                    else if (state.weather.weather.first.icon == '03n') {
-                      currentBgImage = 'assets/images/night_mode.gif';
-                    } else if (state.weather.weather.first.icon == '04n') {
-                      currentBgImage = 'assets/images/night_mode.gif';
-                    } else if (state.weather.weather.first.icon == '09n') {
-                      currentBgImage = 'assets/images/night_mode.gif';
-                    } else if (state.weather.weather.first.icon == '03d') {
-                      currentBgImage = 'assets/images/cold_mode.jpg';
-                    } else {
-                      currentBgImage = 'assets/images/night_mode.gif';
-                    }
                     return Stack(
                       children: [
                         Image.asset(
-                          currentBgImage,
+                          state.weather.currentWeatherBgImage,
                           fit: BoxFit.cover,
                           height: size.height,
                           width: size.width,
@@ -190,17 +156,17 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                     style: titleTextStyle(fontSize: 16),
                                   ),
                                 ),
-                                spacer(height: 10),
+                                const Space(height: 10),
                                 Text(
                                   "${state.weather.name}, ${state.weather.country}",
                                   style: titleTextStyle(fontSize: 22),
                                 ),
-                                spacer(height: 10),
+                                const Space(height: 10),
                                 Text(
                                   '${state.weather.temp}° C',
                                   style: titleTextStyle(fontSize: 50),
                                 ),
-                                spacer(height: 8),
+                                const Space(height: 8),
                                 Text(
                                   '${state.weather.tempMax}° C / ${state.weather.tempMin}° C',
                                   style: subTitleTextStyle(fontSize: 18),
@@ -278,7 +244,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                         .add(SearchCityWeather(value));
                                   },
                                   decoration: InputDecoration(
-                                    hintText: 'Search City',
+                                    hintText: 'Type a City',
                                     hintStyle: subTitleTextStyle(fontSize: 18),
                                     border: InputBorder.none,
                                     prefixIcon: Icon(
@@ -330,7 +296,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                         .add(SearchCityWeather(value));
                                   },
                                   decoration: InputDecoration(
-                                    hintText: 'Search City',
+                                    hintText: 'Type a City',
                                     hintStyle: subTitleTextStyle(fontSize: 18),
                                     border: InputBorder.none,
                                     prefixIcon: Icon(

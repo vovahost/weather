@@ -42,7 +42,8 @@ dependencies:
   android_intent_plus: ^4.0.2
   intl: ^0.18.1
   google_fonts: ^5.1.0
-
+  shared_preferences: ^2.2.0
+  sliding_up_panel: ^2.0.0+1
 
 
 dev_dependencies:

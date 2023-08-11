@@ -15,4 +15,16 @@ class OpenWeatherService {
     final response = await _apiHelper.get(path);
     return response;
   }
+
+  Future<dynamic> getCityWeatherForecast({
+    required double lat,
+    required double long,
+    required String unit,
+    required String exclude,
+  }) async {
+    final query = "lon=$long&lat=$lat&appid=$_openWeatherApiKey&units=$unit&exclude=$exclude";
+    final path = "$_baseUrl/onecall?$query";
+    final response = await _apiHelper.get(path);
+    return response;
+  }
 }
