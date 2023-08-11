@@ -89,14 +89,14 @@ void showSnackBar(BuildContext context, String message) {
   )));
 }
 
-class Loading extends StatefulWidget {
-  const Loading({Key? key}) : super(key: key);
+class LoadingIndicator extends StatefulWidget {
+  const LoadingIndicator({Key? key}) : super(key: key);
 
   @override
-  State<Loading> createState() => _LoadingState();
+  State<LoadingIndicator> createState() => _LoadingIndicatorState();
 }
 
-class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
+class _LoadingIndicatorState extends State<LoadingIndicator> with SingleTickerProviderStateMixin {
   late final _controller =
       AnimationController(vsync: this, duration: const Duration(seconds: 2))
         ..repeat();

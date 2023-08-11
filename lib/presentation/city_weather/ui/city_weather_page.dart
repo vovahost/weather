@@ -66,12 +66,12 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                           .add(SearchCityWeather(value));
                                     },
                                     decoration: InputDecoration(
-                                      hintText: 'Type a city',
-                                      hintStyle:
-                                          subTitleTextStyle(fontSize: 18),
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.symmetric(horizontal: 16)
-                                    ),
+                                        hintText: 'Type a city',
+                                        hintStyle:
+                                            subTitleTextStyle(fontSize: 18),
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 16)),
                                   ),
                                 ),
                                 IconButton(
@@ -105,7 +105,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                     );
                   }
                   if (state is CityWeatherLoading) {
-                    return const Loading();
+                    return const LoadingIndicator();
                   }
                   if (state is CityWeatherSuccess) {
                     return Stack(
@@ -244,17 +244,18 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                 ),
                               ),
                               IconButton(
-                                  key: const ValueKey('refresh'),
-                                  onPressed: () {
-                                    BlocProvider.of<CityWeatherBloc>(context)
-                                        .add(SearchCityWeather(
-                                            _searchController.text));
-                                  },
-                                  icon: Icon(
-                                    Icons.refresh,
-                                    size: 28,
-                                    color: AppColors.iconColor,
-                                  ))
+                                key: const ValueKey('refresh'),
+                                onPressed: () {
+                                  BlocProvider.of<CityWeatherBloc>(context).add(
+                                      SearchCityWeather(
+                                          _searchController.text));
+                                },
+                                icon: Icon(
+                                  Icons.search,
+                                  size: 28,
+                                  color: AppColors.iconColor,
+                                ),
+                              ),
                             ],
                           ),
                         ),

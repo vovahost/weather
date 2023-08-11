@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             Widget widget;
             if (state is HomeLoading) {
-              widget = const Loading();
+              widget = const LoadingIndicator();
             } else if (state is HomeSuccess) {
               final weather = state.weatherData;
               widget = _slidingUpPanel(size, weather, state);
