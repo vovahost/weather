@@ -207,11 +207,11 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const Space(height: 12),
                 HourlyWeatherWidget(
-                  hourWeather: weather.hourly,
+                  hourWeatherList: weather.hourly,
                 ),
                 DailyWeatherWidget(
                   dailyWeather: weather.daily,
-                )
+                ),
               ],
             ),
           ),
