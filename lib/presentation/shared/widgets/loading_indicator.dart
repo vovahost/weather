@@ -34,4 +34,10 @@ class _LoadingIndicatorState extends State<LoadingIndicator>
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
