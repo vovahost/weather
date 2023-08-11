@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/presentation/city_weather/bloc/city_weather_bloc.dart';
+import 'package:weather/presentation/city_weather/ui/city_list_view.dart';
 import 'package:weather/presentation/shared/resources/app_colors.dart';
 import 'package:weather/presentation/shared/resources/app_images.dart';
 import 'package:weather/presentation/shared/resources/app_text_styles.dart';
@@ -65,18 +66,9 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
       child: Column(
         children: [
           _searchBar(size, context),
-          Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/3d/02d.png',
-                    height: size.height * 0.2,
-                  ),
-                ],
-              ),
-            ),
+          const Space(height: 8),
+          const Expanded(
+            child: CityListView(),
           ),
         ],
       ),
