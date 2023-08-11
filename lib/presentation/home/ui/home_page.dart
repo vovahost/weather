@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         child: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is HomeFailed) {
-              showSnackBar(context, state.error);
+              showUnknownErrorSnackBar(context);
             }
           },
           builder: (context, state) {

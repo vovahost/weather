@@ -78,12 +78,15 @@ String getDayFromEpoch(int dt) {
   return day;
 }
 
-void showSnackBar(BuildContext context, String message) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+void showUnknownErrorSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
       content: Text(
-    message,
-    style: subTitleTextStyle(fontSize: 12),
-  )));
+        'An unknown error occurred. Retry again',
+        style: subTitleTextStyle(fontSize: 12).copyWith(color: Colors.white),
+      ),
+    ),
+  );
 }
 
 class SomethingWentWrong extends StatelessWidget {
@@ -94,9 +97,19 @@ class SomethingWentWrong extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        'Something went wrong!',
-        style: titleTextStyle(fontSize: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/3d/11d.png',
+            width: 40,
+            height: 40,
+          ),
+          Text(
+            'Something went wrong!',
+            style: titleTextStyle(fontSize: 16),
+          ),
+        ],
       ),
     );
   }

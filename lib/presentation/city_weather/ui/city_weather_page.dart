@@ -29,7 +29,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
             body: BlocListener<CityWeatherBloc, CityWeatherState>(
               listener: (context, state) {
                 if (state is CityWeatherFailed) {
-                  showSnackBar(context, state.error);
+                  showUnknownErrorSnackBar(context);
                 }
               },
               child: BlocBuilder<CityWeatherBloc, CityWeatherState>(
