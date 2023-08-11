@@ -3,7 +3,12 @@ import 'package:weather/presentation/shared/resources/uk_cities.dart';
 import 'package:weather/presentation/shared/utils/utils.dart';
 
 class CityListView extends StatelessWidget {
-  const CityListView({super.key});
+  final Function(String city) onCityTap;
+
+  const CityListView({
+    super.key,
+    required this.onCityTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +18,17 @@ class CityListView extends StatelessWidget {
         final city = ukCities[index];
         return Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              city,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
+          child: InkWell(
+            onTap: () {
+              onCityTap(city);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                city,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

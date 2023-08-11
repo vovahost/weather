@@ -74,8 +74,14 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
             clearButtonShown: false,
           ),
           const Space(height: 8),
-          const Expanded(
-            child: CityListView(),
+          Expanded(
+            child: CityListView(
+              onCityTap: (city) {
+                _searchController.text = city;
+                BlocProvider.of<CityWeatherBloc>(context)
+                    .add(SearchCityWeather(city));
+              },
+            ),
           ),
         ],
       ),
