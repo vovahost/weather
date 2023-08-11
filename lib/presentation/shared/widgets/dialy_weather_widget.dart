@@ -25,38 +25,45 @@ class DailyWeatherWidget extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: size.width * 0.3,
-                      child: Text(
-                        getDayFromEpoch(dailyWeather[index].dt),
-                        style: subTitleTextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    SizedBox(
-                      width: size.width * 0.09,
-                      child: Image.asset(
-                        AppImages.getSmallAsset(
-                            dailyWeather[index].weather.first.icon),
-                        width: size.width * 0.09,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      '${dailyWeather[index].temp.max}°',
-                      style: titleTextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      '${dailyWeather[index].temp.min}°',
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: size.width * 0.3,
+                    child: Text(
+                      getDayFromEpoch(dailyWeather[index].dt),
                       style: subTitleTextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ).copyWith(color: Colors.indigo),
                     ),
-                  ]),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.09,
+                    child: Image.asset(
+                      AppImages.getSmallAsset(
+                          dailyWeather[index].weather.first.icon),
+                      width: size.width * 0.09,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 2,
+                  ),
+                  Text(
+                    '${dailyWeather[index].temp.max}°',
+                    style: titleTextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ).copyWith(color: Colors.black87),
+                  ),
+                  Text(
+                    '${dailyWeather[index].temp.min}°',
+                    style: subTitleTextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ).copyWith(color: Colors.black54),
+                  ),
+                ],
+              ),
             );
           }),
     );

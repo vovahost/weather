@@ -80,7 +80,8 @@ class _HomePageState extends State<HomePage> {
                         top: size.width * 0.25,
                         right: size.width * 0.09,
                         child: Image.asset(
-                          AppImages.getAsset(weather.current.weather.first.icon),
+                          AppImages.getAsset(
+                              weather.current.weather.first.icon),
                           height: size.height * 0.1,
                         ),
                       ),
