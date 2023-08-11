@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather/domain/weather/model/weather_forecast.dart';
 import 'package:weather/presentation/home/bloc/home_bloc.dart';
+import 'package:weather/presentation/shared/extensions/string_extensions.dart';
 import 'package:weather/presentation/shared/resources/app_colors.dart';
 import 'package:weather/presentation/shared/resources/app_images.dart';
 import 'package:weather/presentation/shared/resources/app_text_styles.dart';
@@ -104,51 +105,65 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Stack(
           children: [
-            Positioned(
-              top: size.width * 0.25,
-              right: size.width * 0.09,
-              child: Image.asset(
-                AppImages.getAsset(weather.current.weather.first.icon),
-                height: size.height * 0.1,
-              ),
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Space(height: 64),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Text(
+                    state.place.toTitleCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      shadows: <Shadow>[
+                        const Shadow(
+                          offset: Offset(0.0, 0.0),
+                          blurRadius: 8.0,
+                          color: Colors.black38,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Space(height: 16),
                 Container(
-                  width: size.width * 0.6,
+                  // width: size.width * 0.6,
                   padding: EdgeInsets.only(
-                      left: size.width * 0.08,
-                      right: size.width * 0.08,
-                      bottom: 20.0,
-                      top: size.height * 0.09),
+                    left: size.width * 0.08,
+                    right: size.width * 0.08,
+                    bottom: 20.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        state.place,
-                        style: GoogleFonts.montserrat(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          shadows: <Shadow>[
-                            const Shadow(
-                              offset: Offset(0.0, 0.0),
-                              blurRadius: 8.0,
-                              color: Colors.black38,
-                            ),
-                          ],
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '${weather.current.temp}°',
+                                style: titleTextStyle(fontSize: 54).copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Space(height: 16),
+                              _weatherSummary(weather),
+                            ],
+                          ),
+                          Image.asset(
+                            AppImages.getAsset(weather.current.weather.first.icon),
+                            height: size.height * 0.1,
+                          ),
+                        ],
                       ),
-                      const Space(height: 16),
-                      Text(
-                        '${weather.current.temp}°',
-                        style: titleTextStyle(fontSize: 54).copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Space(height: 16),
-                      _weatherSummary(weather),
                     ],
                   ),
                 ),
