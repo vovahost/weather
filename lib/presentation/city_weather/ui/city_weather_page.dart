@@ -5,6 +5,7 @@ import 'package:weather/presentation/shared/resources/app_colors.dart';
 import 'package:weather/presentation/shared/resources/app_images.dart';
 import 'package:weather/presentation/shared/resources/app_text_styles.dart';
 import 'package:weather/presentation/shared/utils/utils.dart';
+import 'package:weather/presentation/shared/widgets/loading_indicator.dart';
 import 'package:weather/presentation/shared/widgets/weather_detail_widget.dart';
 
 class CityWeatherPage extends StatefulWidget {
@@ -70,7 +71,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                         hintStyle:
                                             subTitleTextStyle(fontSize: 18),
                                         border: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(
+                                        contentPadding: const EdgeInsets.symmetric(
                                             horizontal: 16)),
                                   ),
                                 ),

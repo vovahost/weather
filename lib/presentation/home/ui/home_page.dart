@@ -10,6 +10,7 @@ import 'package:weather/presentation/shared/resources/app_text_styles.dart';
 import 'package:weather/presentation/shared/utils/utils.dart';
 import 'package:weather/presentation/shared/widgets/dialy_weather_widget.dart';
 import 'package:weather/presentation/shared/widgets/hourly_weather_widget.dart';
+import 'package:weather/presentation/shared/widgets/loading_indicator.dart';
 import 'package:weather/presentation/shared/widgets/weather_detail_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
               final weather = state.weatherData;
               widget = _slidingUpPanel(size, weather, state);
             } else if (state is HomeFailed) {
-              widget = SomethingWentWrong(message: state.error);
+              widget = const SomethingWentWrong();
             } else {
               widget = const SizedBox();
             }

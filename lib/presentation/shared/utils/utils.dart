@@ -1,10 +1,7 @@
-import 'dart:math' as math;
-
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:weather/presentation/shared/resources/app_images.dart';
 import 'package:weather/presentation/shared/resources/app_strings.dart';
 import 'package:weather/presentation/shared/resources/app_text_styles.dart';
 
@@ -89,48 +86,16 @@ void showSnackBar(BuildContext context, String message) {
   )));
 }
 
-class LoadingIndicator extends StatefulWidget {
-  const LoadingIndicator({Key? key}) : super(key: key);
-
-  @override
-  State<LoadingIndicator> createState() => _LoadingIndicatorState();
-}
-
-class _LoadingIndicatorState extends State<LoadingIndicator> with SingleTickerProviderStateMixin {
-  late final _controller =
-      AnimationController(vsync: this, duration: const Duration(seconds: 2))
-        ..repeat();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (_, child) {
-          return Transform.rotate(
-            angle: _controller.value * 2 * math.pi,
-            child: Image.asset(
-              AppImages.getSmallAsset('01d'),
-              width: 100,
-              height: 100,
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
 class SomethingWentWrong extends StatelessWidget {
-  const SomethingWentWrong({Key? key, this.message = "Something went wrong !"})
-      : super(key: key);
-  final String message;
+  const SomethingWentWrong({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        message,
+        'Something went wrong!',
         style: titleTextStyle(fontSize: 16),
       ),
     );
