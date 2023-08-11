@@ -66,7 +66,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                           .add(SearchCityWeather(value));
                                     },
                                     decoration: InputDecoration(
-                                      hintText: 'Type a City',
+                                      hintText: 'Type a city',
                                       hintStyle:
                                           subTitleTextStyle(fontSize: 18),
                                       border: InputBorder.none,
@@ -100,14 +100,6 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                 Image.asset(
                                   'assets/3d/02d.png',
                                   height: size.height * 0.2,
-                                ),
-                                const Space(height: 16),
-                                Text(
-                                  'Search the weather \nof the city you want !',
-                                  textAlign: TextAlign.center,
-                                  style: titleTextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.w700),
                                 ),
                               ],
                             ),
@@ -244,7 +236,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                         .add(SearchCityWeather(value));
                                   },
                                   decoration: InputDecoration(
-                                    hintText: 'Type a City',
+                                    hintText: 'Type a city',
                                     hintStyle: subTitleTextStyle(fontSize: 18),
                                     border: InputBorder.none,
                                     prefixIcon: Icon(
@@ -296,7 +288,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                         .add(SearchCityWeather(value));
                                   },
                                   decoration: InputDecoration(
-                                    hintText: 'Type a City',
+                                    hintText: 'Type a city',
                                     hintStyle: subTitleTextStyle(fontSize: 18),
                                     border: InputBorder.none,
                                     prefixIcon: Icon(

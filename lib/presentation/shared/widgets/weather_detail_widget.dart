@@ -19,7 +19,9 @@ class WeatherDetailsWidget extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 2.5, crossAxisCount: 2),
+        childAspectRatio: 2.5,
+        crossAxisCount: 2,
+      ),
       children: [
         HeadingDetailWidget(
           title: "Humidity",
@@ -27,9 +29,10 @@ class WeatherDetailsWidget extends StatelessWidget {
           cimage: cimage,
         ),
         HeadingDetailWidget(
-            title: "Wind Speed",
-            value: '${currentWeather.windSpeed} m/s',
-            cimage: cimage),
+          title: "Wind Speed",
+          value: '${currentWeather.windSpeed} m/s',
+          cimage: cimage,
+        ),
         HeadingDetailWidget(
           title: "Pressure",
           value: '${currentWeather.pressure} hPa',
@@ -46,9 +49,10 @@ class WeatherDetailsWidget extends StatelessWidget {
           cimage: cimage,
         ),
         HeadingDetailWidget(
-            title: "Cloudiness",
-            value: '${currentWeather.clouds}%',
-            cimage: cimage),
+          title: "Cloudiness",
+          value: '${currentWeather.clouds}%',
+          cimage: cimage,
+        ),
       ],
     );
   }
@@ -59,26 +63,30 @@ class HeadingDetailWidget extends StatelessWidget {
   final String value;
   final String? cimage;
 
-  const HeadingDetailWidget(
-      {Key? key, required this.title, required this.value, this.cimage})
-      : super(key: key);
+  const HeadingDetailWidget({
+    Key? key,
+    required this.title,
+    required this.value,
+    this.cimage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(title,
-            style: GoogleFonts.montserrat(
-              fontSize: 16,
-              color: Colors.white,
-            )),
+        Text(
+          title,
+          style: GoogleFonts.montserrat(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
         Text(
           value,
           style: GoogleFonts.montserrat(
-            fontSize: 22,
-            color: cimage == 'assets/images/cold_mode.jpg'
-                ? Colors.pink
-                : Colors.black,
+            fontSize: 20,
+            color: Colors.black,
           ),
         ),
       ],

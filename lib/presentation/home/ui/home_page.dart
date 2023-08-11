@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                         top: size.width * 0.25,
                         right: size.width * 0.09,
                         child: Image.asset(
-                          AppImages.getAsset(weather.currentWeatherBgImage),
+                          AppImages.getAsset(weather.current.weather.first.icon),
                           height: size.height * 0.1,
                         ),
                       ),
@@ -101,27 +101,26 @@ class _HomePageState extends State<HomePage> {
                                   state.place,
                                   style: GoogleFonts.montserrat(
                                     fontSize: 24.0,
+                                    fontWeight: FontWeight.w700,
                                     color: Colors.white,
+                                    shadows: <Shadow>[
+                                      const Shadow(
+                                        offset: Offset(0.0, 0.0),
+                                        blurRadius: 8.0,
+                                        color: Colors.black38,
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 const Space(height: 16),
                                 Text(
                                   '${weather.current.temp}°',
-                                  style: titleTextStyle(fontSize: 64),
+                                  style: titleTextStyle(fontSize: 54).copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 const Space(height: 16),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 11),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.lightBackgroundColor,
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: Text(
-                                    weather.current.weather.first.main,
-                                    style: titleTextStyle(fontSize: 16),
-                                  ),
-                                ),
+                                _weatherSummary(weather),
                               ],
                             ),
                           ),
@@ -157,6 +156,23 @@ class _HomePageState extends State<HomePage> {
             return const SizedBox();
           },
         ),
+      ),
+    );
+  }
+
+  Widget _weatherSummary(WeatherData weather) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: 11,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.lightBackgroundColor.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Text(
+        weather.current.weather.first.main,
+        style: titleTextStyle(fontSize: 16),
       ),
     );
   }

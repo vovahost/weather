@@ -9,7 +9,7 @@ TextStyle titleTextStyle({
   double fontSize = 15,
   FontStyle fontStyle = FontStyle.normal,
 }) {
-  return GoogleFonts.montserrat(
+  return GoogleFonts.lato(
     fontSize: fontSize,
     color: isDark ? AppColors.darkTextColor : AppColors.textColor,
     fontStyle: fontStyle,
@@ -22,7 +22,7 @@ TextStyle subTitleTextStyle({
   double fontSize = 14,
   FontStyle fontStyle = FontStyle.normal,
 }) {
-  return GoogleFonts.montserrat(
+  return GoogleFonts.lato(
     fontSize: fontSize,
     color: isDark ? AppColors.dartSubtextColor : AppColors.subTextColor,
     fontWeight: fontWeight,
