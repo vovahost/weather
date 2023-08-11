@@ -55,109 +55,126 @@ class _HomePageState extends State<HomePage> {
             }
           },
           builder: (context, state) {
+            Widget widget;
             if (state is HomeLoading) {
-              return const Loading();
-            }
-            if (state is HomeSuccess) {
+              widget = const Loading();
+            } else if (state is HomeSuccess) {
               final weather = state.weatherData;
-              return SlidingUpPanel(
-                controller: _controller,
-                boxShadow: const [],
-                parallaxEnabled: true,
-                maxHeight: size.height * 0.7,
-                minHeight: size.height * 0.22,
-                color: Colors.transparent,
-                body: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(weather.currentWeatherBgImage),
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: size.width * 0.25,
-                        right: size.width * 0.09,
-                        child: Image.asset(
-                          AppImages.getAsset(
-                              weather.current.weather.first.icon),
-                          height: size.height * 0.1,
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: size.width * 0.6,
-                            padding: EdgeInsets.only(
-                                left: size.width * 0.08,
-                                right: size.width * 0.08,
-                                bottom: 20.0,
-                                top: size.height * 0.09),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  state.place,
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                    shadows: <Shadow>[
-                                      const Shadow(
-                                        offset: Offset(0.0, 0.0),
-                                        blurRadius: 8.0,
-                                        color: Colors.black38,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const Space(height: 16),
-                                Text(
-                                  '${weather.current.temp}°',
-                                  style: titleTextStyle(fontSize: 54).copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const Space(height: 16),
-                                _weatherSummary(weather),
-                              ],
-                            ),
-                          ),
-                          const Space(height: 16),
-                          WeatherDetailsWidget(
-                            currentWeather: weather.current,
-                            cimage: weather.currentWeatherBgImage,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                panelBuilder: (control) {
-                  return ClipPath(
-                    clipBehavior: const ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                    ).clipBehavior,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(35.0),
-                        topRight: Radius.circular(35.0),
-                      ),
-                      child: _weatherForecastPanel(weather),
-                    ),
-                  );
-                },
-              );
+              widget = _slidingUpPanel(size, weather, state);
+            } else if (state is HomeFailed) {
+              widget = SomethingWentWrong(message: state.error);
+            } else {
+              widget = const SizedBox();
             }
-            if (state is HomeFailed) {
-              return SomethingWentWrong(message: state.error);
-            }
-            return const SizedBox();
+            return AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+              child: widget,
+            );
           },
         ),
       ),
+    );
+  }
+
+  Widget _slidingUpPanel(
+    Size size,
+    WeatherData weather,
+    HomeSuccess state,
+  ) {
+    return SlidingUpPanel(
+      controller: _controller,
+      boxShadow: const [],
+      parallaxEnabled: true,
+      maxHeight: size.height * 0.7,
+      minHeight: size.height * 0.22,
+      color: Colors.transparent,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(weather.currentWeatherBgImage),
+          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: size.width * 0.25,
+              right: size.width * 0.09,
+              child: Image.asset(
+                AppImages.getAsset(weather.current.weather.first.icon),
+                height: size.height * 0.1,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: size.width * 0.6,
+                  padding: EdgeInsets.only(
+                      left: size.width * 0.08,
+                      right: size.width * 0.08,
+                      bottom: 20.0,
+                      top: size.height * 0.09),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        state.place,
+                        style: GoogleFonts.montserrat(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          shadows: <Shadow>[
+                            const Shadow(
+                              offset: Offset(0.0, 0.0),
+                              blurRadius: 8.0,
+                              color: Colors.black38,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Space(height: 16),
+                      Text(
+                        '${weather.current.temp}°',
+                        style: titleTextStyle(fontSize: 54).copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Space(height: 16),
+                      _weatherSummary(weather),
+                    ],
+                  ),
+                ),
+                const Space(height: 16),
+                WeatherDetailsWidget(
+                  currentWeather: weather.current,
+                  cimage: weather.currentWeatherBgImage,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      panelBuilder: (control) {
+        return ClipPath(
+          clipBehavior: const ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ).clipBehavior,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(35.0),
+              topRight: Radius.circular(35.0),
+            ),
+            child: _weatherForecastPanel(weather),
+          ),
+        );
+      },
     );
   }
 

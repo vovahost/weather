@@ -1,7 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:weather/presentation/shared/resources/app_images.dart';
 import 'package:weather/presentation/shared/resources/app_strings.dart';
 import 'package:weather/presentation/shared/resources/app_text_styles.dart';
 
@@ -86,13 +89,34 @@ void showSnackBar(BuildContext context, String message) {
   )));
 }
 
-class Loading extends StatelessWidget {
+class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
 
   @override
+  State<Loading> createState() => _LoadingState();
+}
+
+class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
+  late final _controller =
+      AnimationController(vsync: this, duration: const Duration(seconds: 2))
+        ..repeat();
+
+  @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Center(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (_, child) {
+          return Transform.rotate(
+            angle: _controller.value * 2 * math.pi,
+            child: Image.asset(
+              AppImages.getSmallAsset('01d'),
+              width: 100,
+              height: 100,
+            ),
+          );
+        },
+      ),
     );
   }
 }
