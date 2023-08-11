@@ -20,15 +20,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String getCurrentMode() {
-    var timeNow = DateTime.now().hour;
-
-    if (timeNow <= 17) {
-      return 'night';
-    } else {
-      return 'day';
-    }
-  }
+  final PanelController _controller = PanelController();
+  double _bottomPanelGradientStep = 0.5;
 
   @override
   void initState() {
@@ -37,7 +30,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  final PanelController _controller = PanelController();
+  String getCurrentMode() {
+    var timeNow = DateTime.now().hour;
+    if (timeNow <= 17) {
+      return 'night';
+    } else {
+      return 'day';
+    }
+  }
 
   void togglePanel() =>
       _controller.isPanelOpen ? _controller.close() : _controller.open();
@@ -161,18 +161,18 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      onPanelSlide: (position) {
+        setState(() {
+          _bottomPanelGradientStep = 0.5 - position * 0.5;
+        });
+      },
       panelBuilder: (control) {
-        return ClipPath(
-          clipBehavior: const ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ).clipBehavior,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(35.0),
-              topRight: Radius.circular(35.0),
-            ),
-            child: _weatherForecastPanel(weather),
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(35.0),
+            topRight: Radius.circular(35.0),
           ),
+          child: _weatherForecastPanel(weather),
         );
       },
     );
@@ -185,19 +185,29 @@ class _HomePageState extends State<HomePage> {
         vertical: 11,
       ),
       decoration: BoxDecoration(
-        color: AppColors.lightBackgroundColor.withOpacity(0.7),
+        color: AppColors.lightBackgroundColor.withOpacity(0.4),
         borderRadius: BorderRadius.circular(25),
       ),
       child: Text(
         weather.current.weather.first.main,
-        style: titleTextStyle(fontSize: 16),
+        style: titleTextStyle(fontSize: 19),
       ),
     );
   }
 
   Widget _weatherForecastPanel(WeatherData weather) {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0.0, _bottomPanelGradientStep],
+          colors: [
+            Colors.white.withOpacity(0.4),
+            Colors.white,
+          ],
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(14.0),
         child: ClipRRect(
