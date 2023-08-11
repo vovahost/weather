@@ -10,6 +10,7 @@ import 'package:weather/domain/location/model/location_info.dart';
 import 'package:weather/domain/weather/location_repository.dart';
 import 'package:weather/domain/weather/model/weather_forecast.dart';
 import 'package:weather/domain/weather/weather_repository.dart';
+import 'package:weather/presentation/shared/resources/app_settings.dart';
 
 part 'home_event.dart';
 
@@ -39,8 +40,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }) async {
     emit(HomeLoading());
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final city = prefs.getString('lastCity') ?? 'London';
+      final city = await _getLastCity();
       final LocationInfo? location =
           await _locationRepository.getLocationByCity(
         city: city,
@@ -66,5 +66,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       emit(HomeFailed(e.toString()));
     }
+  }
+
+  Future<String> _getLastCity() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(AppSettings.lastCity) ?? 'London';
   }
 }

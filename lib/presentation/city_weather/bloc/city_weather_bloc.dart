@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather/data/repository/open_weather_repository.dart';
 import 'package:weather/domain/weather/model/city_weather.dart';
 import 'package:weather/domain/weather/weather_repository.dart';
+import 'package:weather/presentation/shared/resources/app_settings.dart';
 
 part 'city_weather_event.dart';
 
@@ -33,6 +35,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
           if (response.statusCode == 200) {
             final data = CityWeather.fromJson(response.data);
             emit(CityWeatherSuccess(data));
+            await _updateLastCity(event.city);
           } else {
             emit(CityWeatherFailed(response.data["message"]));
           }
@@ -41,5 +44,10 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
         emit(const CityWeatherFailed("Not Found"));
       }
     }
+  }
+
+  Future<void> _updateLastCity(String lastCity) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(AppSettings.lastCity, lastCity);
   }
 }
