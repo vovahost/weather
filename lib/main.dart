@@ -39,10 +39,6 @@ class _WeatherAppState extends State<WeatherApp> {
           label: 'Weather',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          label: 'Cities',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.search),
           label: 'Search',
         ),
@@ -64,8 +60,6 @@ class _WeatherAppState extends State<WeatherApp> {
       case 0:
         return const HomePage();
       case 1:
-        return Text('$selectedIndex');
-      case 2:
         return const CityWeatherPage();
       default:
         throw ArgumentError('Invalid page $selectedIndex');
