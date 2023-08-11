@@ -70,11 +70,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                       hintStyle:
                                           subTitleTextStyle(fontSize: 18),
                                       border: InputBorder.none,
-                                      prefixIcon: Icon(
-                                        Icons.search_rounded,
-                                        size: 28,
-                                        color: AppColors.iconColor,
-                                      ),
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 16)
                                     ),
                                   ),
                                 ),
@@ -86,7 +82,7 @@ class _CityWeatherPageState extends State<CityWeatherPage> {
                                               _searchController.text));
                                     },
                                     icon: Icon(
-                                      Icons.refresh,
+                                      Icons.search,
                                       size: 28,
                                       color: AppColors.iconColor,
                                     ))
